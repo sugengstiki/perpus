@@ -22,16 +22,13 @@ class TaskItem extends Component
     public function mount(Task $task)
     {
         $this->task = $task;
-        $this->fill($task->only(['title', 'completed']));
-        $this->completed =  $this->completed == 1 ? true : false;
+        $this->syncTaskData();
     }
-    
-    /**
-     * Method ini dijalankan setiap kali ada perubahan pada task
-     */
-    public function updated()
+
+    public function syncTaskData()
     {
-        $this->task = Task::find($this->task['id']);
+        $this->title = $this->task->title;
+        $this->completed = (bool) $this->task->completed;
     }
     
     /**
@@ -40,7 +37,7 @@ class TaskItem extends Component
     public function toggleComplete()
     {
         $this->task->update(['completed' => !$this->task->completed]);        
-        // $this->refresh();
+     
     }
 
     public function deleteTask()
@@ -48,6 +45,29 @@ class TaskItem extends Component
         $this->dispatch('task-deleted', task: $this->task);
     }
 
+    public function startEdit()
+    {
+        $this->isEditing = true;
+    }
+
+    public function saveEdit()
+    {
+        // Validasi
+        $this->validate([
+            'title' => 'required|min:3|max:255'
+        ]);
+
+        $this->task->update([
+            'title' => $this->title
+        ]);
+        $this->isEditing = false;
+    }
+
+    public function cancelEdit()
+    {
+        $this->syncTaskData();
+        $this->isEditing = false;
+    }
 
     public function render()
     {
