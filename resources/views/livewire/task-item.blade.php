@@ -1,12 +1,15 @@
 <div>
     <li class="flex items-center justify-between p-2 border rounded">
         <!-- Checkbox toggle -->
-        <div class="flex items-center">
+        <div class="flex items-center " >
             <input
                 type="checkbox"
-                wire:model.live="task.completed"
+                wire:model="completed"
+                wire:click="toggleComplete"
                 class="mr-2">
-            <span @class(['line-through'=> $task['completed']])>
+
+            <!-- <input type="text" wire:model.live="completed" class="border p-2 rounded mr-2" /> -->
+            <span @style(['background: #f33; padding:0.2em 0.6em' => $task['completed']]) >
                 {{ $task['title'] }}
             </span>
         </div>
