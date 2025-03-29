@@ -8,8 +8,7 @@
                 wire:click="toggleComplete"
                 class="mr-2">
 
-            <!-- <input type="text" wire:model.live="completed" class="border p-2 rounded mr-2" /> -->
-            <span @style(['background: #f33; padding:0.2em 0.6em' => $task['completed']]) >
+            <span @style(['color: #aaa' => $task['completed']]) >
                 {{ $task['title'] }}
             </span>
         </div>

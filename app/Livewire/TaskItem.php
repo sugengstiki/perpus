@@ -12,6 +12,13 @@ class TaskItem extends Component
     public $title;
     public $completed;
 
+    public $isEditing = false;
+
+    /**
+     * Method untuk menginisialisasi task
+     * @param Task $task
+     * @return void
+     */
     public function mount(Task $task)
     {
         $this->task = $task;
@@ -19,17 +26,21 @@ class TaskItem extends Component
         $this->completed =  $this->completed == 1 ? true : false;
     }
     
-    
-    public function refresh()
+    /**
+     * Method ini dijalankan setiap kali ada perubahan pada task
+     */
+    public function updated()
     {
         $this->task = Task::find($this->task['id']);
-        // $this->completed = $this->task['completed'];
     }
     
+    /**
+     * Method untuk mengubah status task menjadi selesai atau belum selesai
+     */
     public function toggleComplete()
     {
         $this->task->update(['completed' => !$this->task->completed]);        
-        $this->refresh();
+        // $this->refresh();
     }
 
     public function deleteTask()

@@ -13,6 +13,7 @@ class TaskList extends Component
 
     protected $listeners = ['task-deleted' => 'removeTask'];
 
+    
     public function mount()
     {
         $this->refresh();
@@ -25,14 +26,9 @@ class TaskList extends Component
 
     public function removeTask(Task $task)
     {
-        // $this->tasks = Task::where('id', $id)->delete(); // Hapus task dari database
         $task->delete(); // Hapus task dari database
         $this->refresh(); // Refresh daftar task
-
-        // $this->tasks = array_filter($this->tasks, fn($task) => $task['id'] != $id);
     }
-
-    // Properti untuk input task baru
 
     // Method untuk menambah task
     public function addTask()
@@ -47,14 +43,6 @@ class TaskList extends Component
             $this->refresh(); // Refresh daftar task
         }
     }
-
-    // public function deleteTask($index)
-    // {
-    //     // $this->tasks[$index]->delete(); // Hapus task dari database
-    //     // unset($this->tasks[$index]);
-    //     // $this->tasks = array_values($this->tasks); // Reset array keys
-    // }
-
 
     public function render()
     {
