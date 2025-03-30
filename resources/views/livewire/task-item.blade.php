@@ -1,5 +1,5 @@
 <div>
-    <li class="flex items-center justify-between p-2 border rounded">
+    <li class="flex items-center justify-between w-1/3 p-2 even:bg-emerald-100 odd:bg-amber-100 rounded">
         <!-- Checkbox toggle -->
         <div class="flex items-center ">
             <input
@@ -33,6 +33,7 @@
                 class="text-blue-600 ml-2 px-3">
                 ✏️
             </button>
+
             @endif
 
             <!-- <span @style(['color: #aaa' => $task['completed']]) >
@@ -48,6 +49,4 @@
             Hapus
         </button>
     </li>
-
-
 </div>

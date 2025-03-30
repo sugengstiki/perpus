@@ -7,7 +7,7 @@
             type="text"
             wire:model="newTask"
             placeholder="Tambahkan task baru..."
-            class="border p-2 rounded">
+            class="border border-gray-400 p-2 rounded">
         <button
             wire:click="addTask"
             class="bg-blue-500 text-white p-2 rounded ml-2">
@@ -16,11 +16,14 @@
     </div>
 
     <!-- Daftar task -->
-    <ul class="space-y-2">
+    <ul class="flex flex-col space-y-2">
         @foreach($tasks as $task)
         <livewire:task-item :task="$task" :key="$task['id']" />
         @endforeach
     </ul>
+    <div class="w-1/3 mt-4">
+        {{ $tasks->links() }}
+    </div>
 
 
 </div>
