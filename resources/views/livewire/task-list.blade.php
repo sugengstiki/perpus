@@ -25,5 +25,5 @@
         {{ $tasks->links() }}
     </div>
 
-
+    <livewire:edit-task-modal />
 </div>

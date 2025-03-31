@@ -12,23 +12,13 @@ class TaskItem extends Component
     public $title;
     public $completed;
 
-    public $isEditing = false;
+    protected $listeners = ['taskUpdated' => 'refreshTask'];
 
-    /**
-     * Method untuk menginisialisasi task
-     * @param Task $task
-     * @return void
-     */
-    public function mount(Task $task)
+    public function refreshTask($taskId)
     {
-        $this->task = $task;
-        $this->syncTaskData();
-    }
-
-    public function syncTaskData()
-    {
-        $this->title = $this->task->title;
-        $this->completed = (bool) $this->task->completed;
+        if ($this->task->id == $taskId) {
+            $this->task->refresh();
+        }
     }
     
     /**
@@ -43,30 +33,6 @@ class TaskItem extends Component
     public function deleteTask()
     {
         $this->dispatch('task-deleted', task: $this->task);
-    }
-
-    public function startEdit()
-    {
-        $this->isEditing = true;
-    }
-
-    public function saveEdit()
-    {
-        // Validasi
-        $this->validate([
-            'title' => 'required|min:3|max:255'
-        ]);
-
-        $this->task->update([
-            'title' => $this->title
-        ]);
-        $this->isEditing = false;
-    }
-
-    public function cancelEdit()
-    {
-        $this->syncTaskData();
-        $this->isEditing = false;
     }
 
     public function render()
