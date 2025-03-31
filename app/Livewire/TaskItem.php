@@ -12,24 +12,31 @@ class TaskItem extends Component
     public $title;
     public $completed;
 
-    public $isEditing = false;
+    protected $listeners = ['taskUpdated' => 'refreshTask'];
 
-    /**
-     * Method untuk menginisialisasi task
-     * @param Task $task
-     * @return void
-     */
-    public function mount(Task $task)
+    public function refreshTask($taskId)
     {
-        $this->task = $task;
-        $this->syncTaskData();
+        if ($this->task->id == $taskId) {
+            $this->task->refresh();
+        }
     }
+    
+    // /**
+    //  * Method untuk menginisialisasi task
+    //  * @param Task $task
+    //  * @return void
+    //  */
+    // public function mount(Task $task)
+    // {
+    //     $this->task = $task;
+    //     $this->syncTaskData();
+    // }
 
-    public function syncTaskData()
-    {
-        $this->title = $this->task->title;
-        $this->completed = (bool) $this->task->completed;
-    }
+    // public function syncTaskData()
+    // {
+    //     $this->title = $this->task->title;
+    //     $this->completed = (bool) $this->task->completed;
+    // }
     
     /**
      * Method untuk mengubah status task menjadi selesai atau belum selesai
@@ -45,29 +52,14 @@ class TaskItem extends Component
         $this->dispatch('task-deleted', task: $this->task);
     }
 
-    public function startEdit()
-    {
-        $this->isEditing = true;
-    }
+    // // Hapus method startEdit, saveEdit, cancelEdit
+    // // Tambahkan ini:
+    // public function editTask()
+    // {
+    //     // $this->dispatch('open-edit-modal', task: $this->task);
+    //     $this->dispatch('open-edit-modal', task: $this->task);
+    // }
 
-    public function saveEdit()
-    {
-        // Validasi
-        $this->validate([
-            'title' => 'required|min:3|max:255'
-        ]);
-
-        $this->task->update([
-            'title' => $this->title
-        ]);
-        $this->isEditing = false;
-    }
-
-    public function cancelEdit()
-    {
-        $this->syncTaskData();
-        $this->isEditing = false;
-    }
 
     public function render()
     {

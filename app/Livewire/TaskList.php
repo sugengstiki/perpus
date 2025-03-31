@@ -4,17 +4,20 @@ namespace App\Livewire;
 
 use App\Models\Task;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 class TaskList extends Component
 {
-    use WithPagination;
+    use WithPagination,WithoutUrlPagination;
 
     // Properti reaktif untuk menyimpan daftar task
     // public $tasks;
     public $newTask = '';
 
-    protected $listeners = ['task-deleted' => 'removeTask'];
+    protected $listeners = [
+        'task-deleted' => 'removeTask'
+    ];
 
     public function removeTask(Task $task)
     {
