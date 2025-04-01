@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -39,6 +40,6 @@ class TaskList extends Component
 
     public function render()
     {
-        return view('livewire.task-list',['tasks' => Task::paginate(3)]);
+        return view('livewire.task-list',['tasks' => Auth::user()->tasks()->paginate(3)]);
     }
 }

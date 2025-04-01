@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EditTaskModal extends Component
@@ -14,7 +15,7 @@ class EditTaskModal extends Component
 
     public function loadTask($taskId)
     {
-        $this->task = Task::find($taskId);
+        $this->task = Auth::user()->tasks()->findOrFail($taskId);
         $this->title = $this->task->title;
     }
 
